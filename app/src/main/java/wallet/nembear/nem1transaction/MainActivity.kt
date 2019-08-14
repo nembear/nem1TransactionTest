@@ -9,6 +9,7 @@ import com.ryuta46.nemkotlin.client.RxNemApiClient
 import com.ryuta46.nemkotlin.transaction.TransactionHelper
 import com.ryuta46.nemkotlin.util.ConvertUtils
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,13 +32,23 @@ class MainActivity : AppCompatActivity() {
 
             }
 
+        button.setOnClickListener {
 
-//      XEMを送金するにはこれだと書いてあったけれども、書いたは良いが何を実行すればいいのか分からない....
-        val transaction = TransactionHelper.createXemTransferTransaction(ACCOUNT, RCVADDRESS, 100000000, timeStamp = getNowTimeStamp())
-        val result = client.transactionAnnounce(transaction)
-        Log.d("TAG",result.toString())
+            try {
+                val transaction = TransactionHelper.createXemTransferTransaction(
+                    ACCOUNT,
+                    RCVADDRESS,
+                    100000000,
+                    timeStamp = getNowTimeStamp()
+                )
+                val result = client.transactionAnnounce(transaction)
+                Log.d("TAG", result.toString())
 
+                }catch (e: NumberFormatException) {
+                Log.d("TAG", e.message)
 
+                }
+        }
 
     }
 
